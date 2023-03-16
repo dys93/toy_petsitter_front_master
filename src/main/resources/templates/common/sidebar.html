@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div class="left-side-menu" th:fragment="fragment-sidebar">
+    <!-- LOGO -->
+    <div class="logo-box">
+        <a href="/dashboard" class="logo logo-light text-center">
+            <span class="logo-lg">
+                            <img src="/static/assets/images/logo03.png" alt="" height="30">
+                        </span>
+        </a>
+    </div>
+
+    <div class="h-100" data-simplebar>
+
+<!--        &lt;!&ndash; User box &ndash;&gt;-->
+<!--        <div class="user-box text-center">-->
+<!--            <img src="/static/assets/images/users/avatar-1.jpg" alt="user-img" title="Mat Helme"-->
+<!--                 class="rounded-circle avatar-md">-->
+<!--            <div class="dropdown">-->
+<!--                <a href="#" class="text-reset dropdown-toggle h5 mt-2 mb-1 d-block"-->
+<!--                   data-bs-toggle="dropdown">Nik Patel</a>-->
+<!--                <div class="dropdown-menu user-pro-dropdown">-->
+
+<!--                    &lt;!&ndash; item&ndash;&gt;-->
+<!--                    <a href="javascript:void(0);" class="dropdown-item notify-item">-->
+<!--                        <i class="fe-user me-1"></i>-->
+<!--                        <span>My Account</span>-->
+<!--                    </a>-->
+
+<!--                    &lt;!&ndash; item&ndash;&gt;-->
+<!--                    <a href="javascript:void(0);" class="dropdown-item notify-item">-->
+<!--                        <i class="fe-settings me-1"></i>-->
+<!--                        <span>Settings</span>-->
+<!--                    </a>-->
+
+<!--                    &lt;!&ndash; item&ndash;&gt;-->
+<!--                    <a href="javascript:void(0);" class="dropdown-item notify-item">-->
+<!--                        <i class="fe-lock me-1"></i>-->
+<!--                        <span>Lock Screen</span>-->
+<!--                    </a>-->
+
+<!--                    &lt;!&ndash; item&ndash;&gt;-->
+<!--                    <a href="javascript:void(0);" class="dropdown-item notify-item">-->
+<!--                        <i class="fe-log-out me-1"></i>-->
+<!--                        <span>Logout</span>-->
+<!--                    </a>-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--            <p class="text-reset">Admin Head</p>-->
+<!--        </div>-->
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+
+            <ul id="side-menu">
+
+<!--                <li class="menu-title">Navigation</li>-->
+
+                <li>
+                    <a href="/dashboard" >
+                        <i class="ri-dashboard-line"></i>
+                        <span> 대시보드 </span>
+                    </a>
+                </li>
+
+<!--                <li>-->
+<!--                    <a href="#sidebarLayouts" data-bs-toggle="collapse" aria-expanded="false" aria-controls="sidebarLayouts">-->
+<!--                        <i class="ri-layout-line"></i>-->
+<!--                        <span> Layouts </span>-->
+<!--                        <span class="menu-arrow"></span>-->
+<!--                    </a>-->
+<!--                    <div class="collapse" id="sidebarLayouts">-->
+<!--                        <ul class="nav-second-level">-->
+<!--                            <li>-->
+<!--                                <a href="layouts-horizontal.html">Horizontal</a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="layouts-detached.html">Detached</a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="layouts-two-column.html">Two Column Menu</a>-->
+<!--                            </li>-->
+<!--                            <li>-->
+<!--                                <a href="layouts-preloader.html">Preloader</a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+<!--                </li>-->
+
+                <li class="menu-title mt-2">회원관리</li>
+
+                <li>
+                    <a href="/userList">
+                        <i class="fe-user"></i>
+                        <span> 일반회원 </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="/sitterList">
+                        <i class="ri-baidu-line"></i>
+                        <span> 펫시터 </span>
+                    </a>
+                </li>
+
+                <li class="menu-title mt-2">매출관리</li>
+
+                <li>
+                    <a href="widgets.html">
+                        <i class="fe-bar-chart"></i>
+                        <span> 매출현황 </span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+        <!-- End Sidebar -->
+
+        <div class="clearfix"></div>
+
+    </div>
+    <!-- Sidebar -left -->
+</div>
+</html>
