@@ -201,7 +201,7 @@
                     </a>
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="javascript:void(0);" onclick="logout();" class="dropdown-item notify-item">
                         <i class="ri-logout-box-line"></i>
                         <span>Logout</span>
                     </a>
@@ -231,5 +231,17 @@
         </ul>
         <div class="clearfix"></div>
     </div>
+
+    <script src="/static/assets/js/common/toy_common.js"></script>
+    <script src="/static/assets/js/common/toy_error.js"></script>
+
+    <script>
+        function logout() {
+            toy.setCookie("accessToken", null);
+            toy.setCookie("refreshToken", null);
+            window.location.href="/";
+        }
+    </script>
+
 </div>
 </html>
