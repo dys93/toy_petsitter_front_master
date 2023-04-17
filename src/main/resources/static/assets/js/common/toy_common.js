@@ -39,13 +39,18 @@ toy.apiCall = (data) => {
         beforeSend: (xhr) => {
             //access토큰 담아 보내는지 여부
             if(toy.getCookie("accessToken") !=="null") {
-                console.log(">>>>>>>토큰 넣어보냄1"+toy.getCookie("accessToken"))
-                console.log(">>>>>>>토큰 넣어보냄")
                 xhr.setRequestHeader('Authorization', "Bearer "+toy.getCookie("accessToken"))
             }
         },
         success: (result) => {
             if(result.subCode !== 0) {
+                if(result.subCode === 2005){
+                    toyError.setAlert(result);
+                    toy.setCookie("accessToken", null);
+                    toy.setCookie("refreshToken", null);
+                    window.location.href="/main";
+                    return;
+                }
                 if(data.successError) {
                     data.successError(result);
                     return;
@@ -65,6 +70,26 @@ toy.apiCall = (data) => {
             }
             if(data.error) return;
             toyError.setAlert(error.responseJSON);
+        }
+    })
+};
+
+toy.access = (data) => {
+    console.log(">>>>>>>toy.access")
+    toy.apiCall({
+        type:'POST',
+        url: 'http://localhost:8079/api/v1/user/renewToken',
+        data: {
+            refreshToken: toy.getCookie("refreshToken")
+        },
+        success: (result) => {
+            console.log(">>>>>>>>>>>>>>>>>>accessRenew_success")
+            toy.setCookie("accessToken", result.data.accessToken);
+            toy.setCookie("refreshToken", result.data.refreshToken);
+            data.success(result);
+        },
+        successError: (result) => {
+            toyError.setAlert(result);
         }
     })
 };
