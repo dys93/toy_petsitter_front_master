@@ -114,12 +114,8 @@
 
         <script>
             function login() {
-                var email = document.getElementById('emailaddress').value
-                var password = SHA256(document.getElementById('password').value)
-
-                console.log(">>>>>>>>>>>>>>>>>>>>>.email"+email)
-                console.log(">>>>>>>>>>>>>>>>>>>>>.password"+document.getElementById('password').value)
-                console.log(">>>>>>>>>>>>>>>>>>>>>.password 암호화"+password)
+                let email = document.getElementById('emailaddress').value
+                let password = SHA256(document.getElementById('password').value)
 
                 if(email == null || email === "" || password == null || password ===""){
                     alert('아이디와 비밀번호를 모두 입력해 주세요')
@@ -132,13 +128,18 @@
                             pwd: password
                         },
                         success: (result) => {
-                            //대시보드 이동
-                            window.location.href="/dashboard"
                             //토큰 저장
                             console.log(">>>>>>>>>>>>>>>>>>>>result.data.accessToken: "+result.data.accessToken);
                             console.log(">>>>>>>>>>>>>>>>>>>>result.data.refreshToken: "+result.data.refreshToken);
                             toy.setCookie("accessToken", result.data.accessToken);
                             toy.setCookie("refreshToken", result.data.refreshToken);
+
+                            //이메일 저장
+                            sessionStorage.setItem("id", email);
+
+                            //대시보드 이동
+                            window.location.href="/dashboard"
+
                         },
                         successError: (result) => {
                             toyError.setAlert(result);

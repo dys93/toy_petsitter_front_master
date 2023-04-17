@@ -183,9 +183,8 @@
 
             <li class="dropdown notification-list topbar-dropdown">
                 <a class="nav-link dropdown-toggle nav-user me-0 waves-effect waves-light" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="/static/assets/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
-                    <span class="pro-user-name ms-1">
-                                    Nik Patel <i class="mdi mdi-chevron-down"></i>
+                    <span th:id="email" class="pro-user-name ms-1">
+                                    Nik <i class="mdi mdi-chevron-down"></i>
                                 </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -236,6 +235,12 @@
     <script src="/static/assets/js/common/toy_error.js"></script>
 
     <script>
+        $(() => {
+            let id = sessionStorage.getItem("id");
+            document.getElementById('email').innerText = id;
+        });
+
+
         function logout() {
             toy.setCookie("accessToken", null);
             toy.setCookie("refreshToken", null);
