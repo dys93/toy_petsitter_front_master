@@ -3,6 +3,54 @@
     <!-- Head-->
     <div th:replace="/common/header.html :: fragment-header"></div>
 
+    <style>
+        .modal-confirm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-confirm .bg {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal-title {
+            border-bottom: 1px solid grey;
+        }
+
+        .modal-body {
+            position: absolute;
+            background-color: #fff;
+            width: 400px;
+            height: 220px;
+            padding: 15px;
+        }
+
+        .modal-footer {
+            text-align:center;
+            margin-bottom: 20px;
+        }
+
+        .modal-footer button {
+            display: inline-block;
+            width: 80px;
+            border: 1px solid rgb(113, 162, 255);
+            margin-top: 30px;
+        }
+
+        .modal-hidden {
+            display: none;
+        }
+
+    </style>
+
     <body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
 
         <!-- Begin page -->
@@ -60,20 +108,30 @@
                                                     <th>전화번호</th>
                                                     <th style="width: 210px;">주소</th>
                                                     <th>가입일</th>
+                                                    <th>잠금 여부</th>
+                                                    <th>마지막 로그인</th>
+                                                    <th>탈퇴여부</th>
                                                 </tr>
                                             </thead>
 
-                                            <tbody>
+                                            <tbody id="list">
                                                 <tr>
                                                     <td>Tiger Nixon</td>
                                                     <td>Edinburgh</td>
                                                     <td>61</td>
                                                     <td>2011/04/25</td>
+                                                    <td>2011/04/25</td>
+                                                    <td>$320,800</td>
                                                     <td>$320,800</td>
                                                     <td>$320,800</td>
                                                 </tr>
                                             </tbody>
                                         </table>
+
+                                        <div class="d-flex justify-content-center" style="height: 25px;">
+                                            <ul class="pagination pagination-rounded" id="sitterInfoPagination">
+                                            </ul>
+                                        </div>
 
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
@@ -490,6 +548,108 @@
         <!-- Right bar overlay-->
         <div class="rightbar-overlay"></div>
 
+        <!-- 잠금 해제 모달 -->
+        <div id="modal" class="modal-confirm modal-hidden">
+            <div class="bg"></div>
+            <div class="modal-body">
+                <div class="modal-title">
+                    <h3>잠금 해제</h3>
+                </div>
+                <div>
+                    <div>
+                        <div>
+                            <p> 잠금을 해제 하시겠습니까?</p>
+                            <p> 잠금 해제시 정상 로그인이 가능합니다.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="modal-close">아니요</button>
+                        <button type="button" class="modal-pay" onclick="unlock()">네</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 시터 상세 정보 모달 -->
+        <div id="modal-detail" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">펫시터 정보 상세</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="field-1" class="form-label">은행</label>
+                                    <input type="text" class="form-control" id="field-1">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="field-2" class="form-label">계좌번호</label>
+                                    <input type="text" class="form-control" id="field-2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="field-3" class="form-label">반려동물 경험</label>
+                                    <input type="text" class="form-control" id="field-4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="field-3" class="form-label">시터 경험</label>
+                                    <input type="text" class="form-control" id="field-3">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3 no-margin">
+                                    <label for="field-7" class="form-label">시터경험 상세</label>
+                                    <textarea class="form-control" id="field-7"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
+        <!-- 시터 가입 승인 모달 -->
+        <div id="modal-approval" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">가입 승인</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <h5>해당 유저의 가입을 승인하시겠습니까?</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-info waves-effect waves-light">승인</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.modal -->
+
         <!-- Vendor js -->
         <script src="/static/assets/js/vendor.min.js"></script>
 
@@ -514,6 +674,205 @@
 
         <!-- App js -->
         <script src="/static/assets/js/app.min.js"></script>
-        
+
+
+        <script src="/static/assets/js/common/toy_common.js"></script>
+        <script src="/static/assets/js/common/toy_error.js"></script>
+        <script src="/static/assets/js/common/toy-pagination.js"></script>
+
+    <script>
+        let listPageParam = {page: 0, targetId: 'sitterList'};
+        let pageNum = 1;
+        let userSeq = null;
+
+        $(() => {
+           getUserManageList(1);
+            setButtonEvent();
+        });
+
+        function getUserManageList(pageNum) {
+            console.log(">>>>>>>>>>>>>>>>>>>>>pageNum"+pageNum);
+            console.log(">>>>>>>>>>>>>>>>>>>>>유저 리스트 가져오기 getUserManageList")
+            toy.apiCall({
+                type: 'GET',
+                url: 'http://localhost:8079/api/v1/admin/getUserManageList',
+                data: {
+                    pageNum: pageNum,
+                },
+                success: (result) => {
+                    console.log(">>>>>>>>>>>>>>>>>>>getUserManageList API RETURN SUCCESS")
+                    setUserList(result.data)
+                },
+                successError: (result) => {
+                    if(result.subCode === 2004){ //엑세스 토큰 만료
+                        toy.access({
+                            success: (result) => {
+                                console.log(">>>>>>>>>>>>>>>>>>>>>>성공 응답을 받았다면 다시 요청")
+                                getUserManageList(pageNum)
+                            },
+                            successError: (result) => {
+                                toyError.setAlert(result);
+                            }
+                        });
+                    } else {
+                        toyError.setAlert(result);
+                    }
+                }
+            });
+        }
+
+        const setUserList = (data) => {
+            //회원 리스트 데이터가 없는 경우
+            if(data.totalCount === 0) {
+                console.log(">>>>>>>>>>>>회원 없음")
+                let htmls ="";
+                htmls += `<div><p>요청하신 회원 내역이 없습니다.</p></div>`
+                $("#list").html(htmls);
+            }
+
+            const userList = data.userList;
+            const totalCount = data.totalCount;
+
+            let totalPage = Math.ceil(totalCount/10);
+
+            const pagination = new Pagination(data.page, listPageParam.targetId, 5, totalPage, data.startPage, data.endPage);
+
+            //페이징 객체 호출
+            const pageObj = pagination.paging();
+            listPageParam.next = pageObj.next;
+            listPageParam.prev = pageObj.prev;
+
+            //페이징 출력
+            $('#sitterInfoPagination').html(pageObj.htmls);
+
+            let htmls = "";
+
+            $.each(userList, (idx, item) => {
+                let address = item.address + item.address_detail;
+
+                let date = item.reg_date;
+                let splitDate = date.split(' ');
+                let regDate = splitDate[0];
+
+                let loginDate = item.last_login;
+                let splitLogin = loginDate.split(' ');
+                let lastLogin = splitLogin[0];
+
+                let withdrawal="";
+                if(item.withdrawal_yn ==='Y') {
+                    withdrawal = "탈퇴"
+                } else {
+                    withdrawal = "활동"
+                }
+
+                if(item.user_status ==="L") {
+                    htmls +=
+                        `<tr>
+                         <td>${item.user_seq}</td>
+                         <td>${item.name}</td>
+                         <td>${item.email}</td>
+                         <td>${item.phone}</td>
+                         <td>${address}</td>
+                         <td>${regDate}</td>
+                         <td>LOCK<button class="modal-open" style="margin-left: 5px;" onclick="getValue(${item.user_seq})">해제</button></td>
+                         <td>${lastLogin}</td>
+                         <td>${withdrawal}</td>
+                    </tr>`
+                } else {
+                    htmls +=
+                        `<tr>
+                         <td>${item.user_seq}</td>
+                         <td>${item.name}</td>
+                         <td>${item.email}</td>
+                         <td>${item.phone}</td>
+                         <td>${address}</td>
+                         <td>${regDate}</td>
+                         <td>UNLOCK</td>
+                         <td>${lastLogin}</td>
+                         <td>${withdrawal}</td>
+                    </tr>`
+                }
+                $("#list").html(htmls);
+            });
+
+            const lockBtn = document.querySelectorAll(".modal-open");
+            lockBtn.forEach((aItem) => {
+                aItem.addEventListener("click", open);
+            })
+
+        }
+
+        const open = () => {
+            document.querySelector(".modal-confirm").classList.remove("modal-hidden");
+        }
+        const close = () => {
+            document.querySelector(".modal-confirm").classList.add("modal-hidden");
+        }
+        document.querySelector(".modal-close").addEventListener("click", close);
+        document.querySelector(".bg").addEventListener("click", close);
+
+
+        //버튼 이벤트 정의
+        function setButtonEvent() {
+
+            //페이지 이동
+            $(document).on('click', '.page-link', function () {
+                console.log(">>>>>>>>>>>>>클릭 시 페이지 이동 버튼 이번트 userList")
+                let id = $(this).attr('id');
+                let page = $(this).text();
+
+                if (id === 'prev') page = listPageParam.prev;
+                if (id === 'next') page = listPageParam.next;
+
+                listPageParam.page = page;
+                getUserManageList(page);
+
+            });
+        }
+
+        //클릭한 버튼 user_seq 가져오기
+        function getValue(seq){
+            userSeq = seq;
+        }
+
+        //잠금해제
+        function unlock() {
+            console.log(">>>>>>>>>>>>>>>>>>>>>userSeq"+userSeq);
+            console.log(">>>>>>>>>>>>>>>>>>>>>잠금해제 unlock")
+            toy.apiCall({
+                type: 'PUT',
+                url: 'http://localhost:8079/api/v1/admin/unlockUser',
+                data: {
+                    userSeq: userSeq,
+                },
+                success: (result) => {
+                    console.log(">>>>>>>>>>>>>>>>>>>unlockUser API RETURN SUCCESS")
+                    alert('계정 잠금이 해제되었습니다')
+                    window.location.href="/userList";
+                },
+                successError: (result) => {
+                    if(result.subCode === 2004){ //엑세스 토큰 만료
+                        toy.access({
+                            success: (result) => {
+                                console.log(">>>>>>>>>>>>>>>>>>>>>>성공 응답을 받았다면 다시 요청")
+                                unlock(userSeq);
+                            },
+                            successError: (result) => {
+                                toyError.setAlert(result);
+                            }
+                        });
+                    } else {
+                        toyError.setAlert(result);
+                    }
+                }
+            });
+        }
+
+
+
+
+    </script>
+
+
     </body>
 </html>
