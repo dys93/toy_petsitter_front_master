@@ -570,86 +570,6 @@
             </div>
         </div>
 
-        <!-- 시터 상세 정보 모달 -->
-        <div id="modal-detail" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">펫시터 정보 상세</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="field-1" class="form-label">은행</label>
-                                    <input type="text" class="form-control" id="field-1">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="field-2" class="form-label">계좌번호</label>
-                                    <input type="text" class="form-control" id="field-2">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="field-3" class="form-label">반려동물 경험</label>
-                                    <input type="text" class="form-control" id="field-4">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <label for="field-3" class="form-label">시터 경험</label>
-                                    <input type="text" class="form-control" id="field-3">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="mb-3 no-margin">
-                                    <label for="field-7" class="form-label">시터경험 상세</label>
-                                    <textarea class="form-control" id="field-7"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-info waves-effect waves-light" data-bs-dismiss="modal">확인</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal -->
-
-        <!-- 시터 가입 승인 모달 -->
-        <div id="modal-approval" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">가입 승인</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="mb-3">
-                                    <h5>해당 유저의 가입을 승인하시겠습니까?</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-info waves-effect waves-light">승인</button>
-                    </div>
-                </div>
-            </div>
-        </div><!-- /.modal -->
-
         <!-- Vendor js -->
         <script src="/static/assets/js/vendor.min.js"></script>
 
@@ -681,7 +601,7 @@
         <script src="/static/assets/js/common/toy-pagination.js"></script>
 
     <script>
-        let listPageParam = {page: 0, targetId: 'sitterList'};
+        let listPageParam = {page: 0, targetId: 'userList'};
         let pageNum = 1;
         let userSeq = null;
 
