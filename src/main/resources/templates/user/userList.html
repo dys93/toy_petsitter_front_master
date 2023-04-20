@@ -652,6 +652,7 @@
 
             const userList = data.userList;
             const totalCount = data.totalCount;
+            let lastLogin = "";
 
             let totalPage = Math.ceil(totalCount/10);
 
@@ -674,9 +675,11 @@
                 let splitDate = date.split(' ');
                 let regDate = splitDate[0];
 
-                let loginDate = item.last_login;
-                let splitLogin = loginDate.split(' ');
-                let lastLogin = splitLogin[0];
+                if(item.last_login != null) {
+                    let loginDate = item.last_login;
+                    let splitLogin = loginDate.split(' ');
+                    lastLogin = splitLogin[0];
+                }
 
                 let withdrawal="";
                 if(item.withdrawal_yn ==='Y') {
